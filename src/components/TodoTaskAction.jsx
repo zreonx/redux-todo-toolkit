@@ -64,7 +64,7 @@ const TodoTaskAction = ({ tasks }) => {
                 <div className="flex flex-row">
                   <Tooltip
                     style="auto"
-                    content={`${todo.inProgress ? "Pending" : "Start"}`}
+                    content={`${todo.inProgress ? "In progress" : "Start"}`}
                   >
                     <button
                       disabled={`${todo.completed ? "disabled" : ""}`}

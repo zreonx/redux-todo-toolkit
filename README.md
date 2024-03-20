@@ -5,7 +5,7 @@ A sarcastic todo application serves as a reminder to prioritize action over proc
 ### Built With
  - Vite
  - Redux
- - Flotwbite UI
+ - Flowbite UI
  - Tailwindcss
 
  

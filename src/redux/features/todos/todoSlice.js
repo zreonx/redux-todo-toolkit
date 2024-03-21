@@ -3,20 +3,22 @@ import { generateId, generateDate } from "../../../helper/todoUtils";
 
 const initialState = {
   tasks: [
-    {
-      id: generateId(),
-      task: "Some task",
-      dateCreated: generateDate(),
-      completed: false,
-      inProgress: false,
-    },
-    {
-      id: generateId(),
-      task: "Another task",
-      dateCreated: generateDate(),
-      completed: true,
-      inProgress: false,
-    },
+    // {
+    //   id: generateId(),
+    //   task: "Some task",
+    //   dateCreated: generateDate(),
+    //   completed: false,
+    //   inProgress: false,
+    //   isEdited: false,
+    // },
+    // {
+    //   id: generateId(),
+    //   task: "Another task",
+    //   dateCreated: generateDate(),
+    //   completed: true,
+    //   inProgress: false,
+    //   isEdited: false,
+    // },
   ],
 
   filter: "ALL",
@@ -38,6 +40,7 @@ const todoSlice = createSlice({
             dateCreated: generateDate(),
             completed: false,
             inProgress: false,
+            isEdited: false,
           },
         ],
       };
@@ -71,7 +74,7 @@ const todoSlice = createSlice({
         ...state,
         tasks: state.tasks.map((todo) => {
           return todo.id === id
-            ? { ...todo, task, dateCreated: generateDate() }
+            ? { ...todo, task, dateCreated: generateDate(), isEdited: true }
             : todo;
         }),
       };

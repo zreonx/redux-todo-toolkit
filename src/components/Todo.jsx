@@ -16,25 +16,25 @@ const Todo = ({ theme, setTheme }) => {
   };
 
   return (
-    <div className="w-[55rem] max-lg:w-full py-4 px-5 max-sm:p-5 transition-colors">
-      <div className="flex justify-between items-center">
+    <div className='w-[55rem] max-lg:w-full py-4 px-5 max-sm:p-5 transition-colors'>
+      <div className='flex justify-between items-center'>
         <div>
-          <h1 className="text-4xl font-semibold">Todo'nt</h1>
-          <p className="px-1">don't do what you want to do</p>
+          <h1 className='text-4xl font-semibold'>Todo'nt</h1>
+          <p className='px-1'>don't do what you want to do</p>
         </div>
 
         <ToggleSwitch
           checked={theme}
-          label=""
+          label=''
           onChange={() => setTheme(!theme)}
         />
       </div>
 
-      <div className="py-3 flex gap-2 flex-col sm:flex-row">
+      <div className='py-3 flex gap-2 flex-col sm:flex-row'>
         <input
-          className="flex-1 shadow-sm rounded-md x-f-default px-4 py-4"
-          type="text"
-          placeholder="Add Todo"
+          className='flex-1 shadow-sm rounded-md x-f-default px-4 py-4'
+          type='text'
+          placeholder='Add Todo'
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
           onKeyUp={(e) => {
@@ -45,7 +45,7 @@ const Todo = ({ theme, setTheme }) => {
         />
         <button
           onClick={handleAddTask}
-          className="px-5 py-4 border rounded-md hover:bg-lightcl dark:hover:text-gray-700"
+          className='px-5 py-4 border rounded-md hover:bg-lightcl dark:hover:text-gray-700'
         >
           Add
         </button>

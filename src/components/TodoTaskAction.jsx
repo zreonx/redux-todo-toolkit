@@ -11,17 +11,21 @@ import {
   markAsCompleteToggle,
   markPendingToggle,
   editSaveTask,
+  removeTask,
 } from "../redux/features/todos/todoSlice";
 import EditModal from "./EditModal";
+import DeleteModal from "./DeleteModal";
 
 const TodoTaskAction = ({ tasks }) => {
   const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
   const [editTodo, setEditTodo] = useState({
     id: "",
     task: "",
     dateCreated: "",
   });
+  const [removeTodoId, setRemoveTodoId] = useState("");
 
   const handleEditTodo = (id, task, date) => {
     const dateCreated = convertToDate(date);
@@ -34,9 +38,14 @@ const TodoTaskAction = ({ tasks }) => {
     setOpenModal(false);
   };
 
+  const handleDeleteTodo = (id) => {
+    dispatch(removeTask({ id }));
+    setDeleteModal(false);
+  };
+
   return (
     <>
-      <div className="mt-5 flex gap-3 flex-col">
+      <div className='mt-5 flex gap-3 flex-col'>
         {tasks
           .map((todo) => {
             return (
@@ -46,7 +55,7 @@ const TodoTaskAction = ({ tasks }) => {
                   todo.completed && "opacity-50 bg-slate-100 dark:bg-slate-700"
                 }`}
               >
-                <div className="flex-1 flex flex-row items-center gap-4 text-ellipsis overflow-hidden">
+                <div className='flex-1 flex flex-row items-center gap-4 text-ellipsis overflow-hidden'>
                   <button
                     onClick={() =>
                       dispatch(markAsCompleteToggle({ id: todo.id }))
@@ -55,15 +64,15 @@ const TodoTaskAction = ({ tasks }) => {
                       todo.completed ? "bg-emerald-300 dark:bg-lime-500" : ""
                     } hover:border-gray-400 flex items-center justify-center`}
                   >
-                    <span className="">
+                    <span className=''>
                       {todo.completed ? <PiCheckBold /> : ""}
                     </span>
                   </button>
-                  <h1 className="flex-1 w-full truncate">{todo.task}</h1>
+                  <h1 className='flex-1 w-full truncate'>{todo.task}</h1>
                 </div>
-                <div className="flex flex-row">
+                <div className='flex flex-row'>
                   <Tooltip
-                    style="auto"
+                    style='auto'
                     content={`${todo.inProgress ? "In progress" : "Start"}`}
                   >
                     <button
@@ -85,18 +94,24 @@ const TodoTaskAction = ({ tasks }) => {
                     </button>
                   </Tooltip>
 
-                  <Tooltip style="auto" content="Edit">
+                  <Tooltip style='auto' content='Edit'>
                     <button
                       onClick={() =>
                         handleEditTodo(todo.id, todo.task, todo.dateCreated)
                       }
-                      className="p-2 text-lg hover:bg-lightcl text-slate-500 dark:text-slate-200 dark:hover:bg-headcl rounded-lg"
+                      className='p-2 text-lg hover:bg-lightcl text-slate-500 dark:text-slate-200 dark:hover:bg-headcl rounded-lg'
                     >
                       <FiEdit />
                     </button>
                   </Tooltip>
-                  <Tooltip style="auto" content="Delete">
-                    <button className="p-2 text-lg hover:bg-lightcl text-slate-500 dark:text-slate-200 dark:hover:bg-headcl rounded-lg">
+                  <Tooltip style='auto' content='Delete'>
+                    <button
+                      onClick={() => {
+                        setRemoveTodoId(todo.id);
+                        setDeleteModal(true);
+                      }}
+                      className='p-2 text-lg hover:bg-lightcl text-slate-500 dark:text-slate-200 dark:hover:bg-headcl rounded-lg'
+                    >
                       <BsTrashFill />
                     </button>
                   </Tooltip>
@@ -113,6 +128,12 @@ const TodoTaskAction = ({ tasks }) => {
         editTodo={editTodo}
         openModal={openModal}
         setOpenModal={setOpenModal}
+      />
+      <DeleteModal
+        deleteModal={deleteModal}
+        setDeleteModal={setDeleteModal}
+        handleDeleteTodo={handleDeleteTodo}
+        id={removeTodoId}
       />
     </>
   );

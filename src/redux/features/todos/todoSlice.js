@@ -76,6 +76,13 @@ const todoSlice = createSlice({
         }),
       };
     },
+    removeTask: (state, { payload }) => {
+      const { id } = payload;
+      return {
+        ...state,
+        tasks: state.tasks.filter((todo) => todo.id !== id),
+      };
+    },
   },
 });
 
@@ -84,6 +91,7 @@ export const {
   markAsCompleteToggle,
   markPendingToggle,
   editSaveTask,
+  removeTask,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

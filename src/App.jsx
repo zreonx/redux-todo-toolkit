@@ -12,8 +12,8 @@ const App = () => {
   }, [theme]);
 
   return (
-    <div className="flex justify-center flex-1 overflow-x-hidden">
-      <style jsx="true">{`
+    <div className='flex justify-center flex-1 overflow-x-hidden'>
+      <style jsx='true'>{`
         input {
           color: black;
         }

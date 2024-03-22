@@ -1,10 +1,25 @@
 import { useSelector } from "react-redux";
 import TodoTaskAction from "./TodoTaskAction";
+import { useCallback, useMemo } from "react";
 
 const TodoTasks = () => {
-  const { tasks } = useSelector((state) => state.todo);
+  const { tasks, filter, search } = useSelector((state) => state.todo);
 
-  return <TodoTaskAction tasks={tasks} />;
+  const handleFilterTodos = useCallback(() => {
+    return tasks.filter((todo) => {
+      const matchFilter =
+        (filter === "Completed" && todo.completed) ||
+        (filter === "Incomplete" && !todo.completed) ||
+        filter === "All" ||
+        (filter === "Started" && todo.inProgress);
+
+      const matchSearch = todo.task.toLowerCase().includes(search);
+
+      return matchFilter && matchSearch;
+    });
+  }, [tasks, filter, search]);
+
+  return <TodoTaskAction tasks={handleFilterTodos()} />;
 };
 
 export default TodoTasks;

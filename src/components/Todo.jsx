@@ -3,17 +3,24 @@ import TodoTasks from "./TodoTasks";
 import { ToggleSwitch } from "flowbite-react";
 import { useDispatch } from "react-redux";
 import { addTask } from "../redux/features/todos/todoSlice";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 const Todo = ({ theme, setTheme }) => {
   const dispatch = useDispatch();
   const [todo, setTodo] = useState("");
+  const inputRef = useRef(null);
 
-  const handleAddTask = () => {
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
+
+  const handleAddTask = useCallback(() => {
     if (todo) {
       dispatch(addTask({ task: todo }));
       setTodo("");
     }
-  };
+  }, [todo]);
 
   return (
     <div className='w-[55rem] max-lg:w-full py-4 px-5 max-sm:p-5 transition-colors'>
@@ -42,6 +49,7 @@ const Todo = ({ theme, setTheme }) => {
               handleAddTask();
             }
           }}
+          ref={inputRef}
         />
         <button
           onClick={handleAddTask}

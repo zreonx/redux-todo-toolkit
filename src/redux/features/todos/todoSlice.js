@@ -86,6 +86,19 @@ const todoSlice = createSlice({
         tasks: state.tasks.filter((todo) => todo.id !== id),
       };
     },
+    filterTasks: (state, { payload }) => {
+      return {
+        ...state,
+        filter: payload.filter,
+      };
+    },
+
+    updateSearch: (state, { payload: { search } }) => {
+      return {
+        ...state,
+        search,
+      };
+    },
   },
 });
 
@@ -95,6 +108,8 @@ export const {
   markPendingToggle,
   editSaveTask,
   removeTask,
+  filterTasks,
+  updateSearch,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

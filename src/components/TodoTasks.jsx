@@ -13,7 +13,9 @@ const TodoTasks = () => {
         filter === "All" ||
         (filter === "Started" && todo.inProgress);
 
-      const matchSearch = todo.task.toLowerCase().includes(search);
+      const matchSearch = todo.task
+        .toLowerCase()
+        .includes(search.toLowerCase());
 
       return matchFilter && matchSearch;
     });

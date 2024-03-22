@@ -39,8 +39,8 @@ const TodoFilter = () => {
             <Dropdown.Item onClick={() => setStatusLabel("All")}>
               All
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => setStatusLabel("Complete")}>
-              Complete
+            <Dropdown.Item onClick={() => setStatusLabel("Completed")}>
+              Completed
             </Dropdown.Item>
             <Dropdown.Item onClick={() => setStatusLabel("Incomplete")}>
               Incomplete

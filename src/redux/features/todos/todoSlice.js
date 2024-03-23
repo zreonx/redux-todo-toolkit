@@ -4,6 +4,7 @@ import { generateId, generateDate } from "../../../helper/todoUtils";
 const todos = JSON.parse(localStorage.getItem("todos")) || {};
 
 const initialState = {
+  filter: "All",
   ...todos,
 };
 

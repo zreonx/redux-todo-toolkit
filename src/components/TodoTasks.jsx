@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
 import TodoTaskAction from "./TodoTaskAction";
-import { useCallback, useMemo } from "react";
+import { useCallback, useMemo, memo } from "react";
 
-const TodoTasks = () => {
+const TodoTasks = memo(() => {
   const { tasks, filter, search } = useSelector((state) => state.todo);
 
   const handleFilterTodos = useCallback(() => {
@@ -22,6 +22,6 @@ const TodoTasks = () => {
   }, [tasks, filter, search]);
 
   return <TodoTaskAction tasks={handleFilterTodos()} />;
-};
+});
 
 export default TodoTasks;

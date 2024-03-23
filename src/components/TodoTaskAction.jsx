@@ -3,8 +3,8 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { BsFillStopCircleFill } from "react-icons/bs";
 import { HiMiniFlag } from "react-icons/hi2";
 import { convertToDate } from "../helper/todoUtils";
-import { useState, useContext } from "react";
-import { TodoContext } from "../context/TodoContext";
+import { useState, useContext, useCallback } from "react";
+import { useTodoContext } from "../context/TodoContext";
 import { useDispatch } from "react-redux";
 import { Tooltip } from "flowbite-react";
 import {
@@ -26,11 +26,12 @@ import {
 } from "../redux/features/todos/todoSlice";
 import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
+import { memo } from "react";
 
-const TodoTaskAction = ({ tasks }) => {
+const TodoTaskAction = memo(({ tasks }) => {
   const dispatch = useDispatch();
   const { deleteModal, setDeleteModal, openModal, setOpenModal } =
-    useContext(TodoContext);
+    useTodoContext();
   const [editTodo, setEditTodo] = useState({
     id: "",
     task: "",
@@ -40,31 +41,31 @@ const TodoTaskAction = ({ tasks }) => {
 
   const [removeTodoId, setRemoveTodoId] = useState("");
 
-  const handleEditTodo = (id, task, date, isEdited) => {
+  const handleEditTodo = useCallback((id, task, date, isEdited) => {
     const dateCreated = convertToDate(date);
     setOpenModal(true);
     setEditTodo({ id, task, dateCreated, isEdited });
-  };
+  });
 
-  const handleSaveTodo = () => {
+  const handleSaveTodo = useCallback(() => {
     dispatch(editSaveTask({ ...editTodo }));
     setOpenModal(false);
-  };
+  });
 
-  const handleDeleteTodo = (id) => {
+  const handleDeleteTodo = useCallback((id) => {
     dispatch(removeTask({ id }));
     setDeleteModal(false);
-  };
+  });
 
-  const handleCompleteToggle = (e, id) => {
+  const handleCompleteToggle = useCallback((e, id) => {
     e.stopPropagation();
     dispatch(markAsCompleteToggle({ id }));
-  };
+  });
 
-  const handlePendingToggle = (e, id) => {
+  const handlePendingToggle = useCallback((e, id) => {
     e.stopPropagation();
     dispatch(markPendingToggle({ id }));
-  };
+  });
 
   return (
     <>
@@ -185,6 +186,5 @@ const TodoTaskAction = ({ tasks }) => {
       )}
     </>
   );
-};
-
+});
 export default TodoTaskAction;

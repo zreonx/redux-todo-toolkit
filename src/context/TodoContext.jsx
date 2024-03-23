@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 export const TodoContext = createContext(null);
 
@@ -17,3 +17,5 @@ export const TodoContextProvider = ({ children }) => {
   };
   return <TodoContext.Provider value={data}>{children}</TodoContext.Provider>;
 };
+
+export const useTodoContext = () => useContext(TodoContext);

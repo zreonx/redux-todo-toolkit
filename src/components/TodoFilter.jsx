@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { Dropdown } from "flowbite-react";
 import { MdChecklistRtl } from "react-icons/md";
 import { BsTrashFill } from "react-icons/bs";
@@ -10,10 +10,11 @@ import {
   removeAllTask,
 } from "../redux/features/todos/todoSlice";
 import { Tooltip } from "flowbite-react";
+import { useTodoContext } from "../context/TodoContext";
 
 const TodoFilter = () => {
   const { search } = useSelector((state) => state.todo);
-  const [statusLabel, setStatusLabel] = useState("All");
+  const { statusLabel, setStatusLabel } = useTodoContext();
 
   const dispatch = useDispatch();
 

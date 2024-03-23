@@ -3,10 +3,10 @@ import { IoIosCloseCircle } from "react-icons/io";
 import { BsFillStopCircleFill } from "react-icons/bs";
 import { HiMiniFlag } from "react-icons/hi2";
 import { convertToDate } from "../helper/todoUtils";
-import { useState, useContext, useCallback } from "react";
+import { useCallback } from "react";
 import { useTodoContext } from "../context/TodoContext";
 import { useDispatch } from "react-redux";
-import { Tooltip } from "flowbite-react";
+import { Tooltip, Toast } from "flowbite-react";
 import {
   Slide,
   Roll,
@@ -30,16 +30,18 @@ import { memo } from "react";
 
 const TodoTaskAction = memo(({ tasks }) => {
   const dispatch = useDispatch();
-  const { deleteModal, setDeleteModal, openModal, setOpenModal } =
-    useTodoContext();
-  const [editTodo, setEditTodo] = useState({
-    id: "",
-    task: "",
-    dateCreated: "",
-    isEdited: "",
-  });
 
-  const [removeTodoId, setRemoveTodoId] = useState("");
+  const {
+    deleteModal,
+    setDeleteModal,
+    openModal,
+    setOpenModal,
+    editTodo,
+    setEditTodo,
+    removeTodoId,
+    setRemoveTodoId,
+    setShowToast,
+  } = useTodoContext();
 
   const handleEditTodo = useCallback((id, task, date, isEdited) => {
     const dateCreated = convertToDate(date);
@@ -54,6 +56,7 @@ const TodoTaskAction = memo(({ tasks }) => {
 
   const handleDeleteTodo = useCallback((id) => {
     dispatch(removeTask({ id }));
+    setShowToast(true);
     setDeleteModal(false);
   });
 

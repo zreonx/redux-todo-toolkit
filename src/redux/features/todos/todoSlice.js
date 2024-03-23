@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { generateId, generateDate } from "../../../helper/todoUtils";
 
-const todos = JSON.parse(localStorage.getItem("todos")) || {};
+const todos = JSON.parse(localStorage.getItem("todos")) || {
+  tasks: [],
+  filter: "All",
+  search: "",
+};
 
 const initialState = {
-  filter: "All",
   ...todos,
 };
 

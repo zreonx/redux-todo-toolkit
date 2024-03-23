@@ -99,6 +99,22 @@ const todoSlice = createSlice({
         search,
       };
     },
+
+    removeAllTask: (state) => {
+      return {
+        ...state,
+        tasks: [],
+      };
+    },
+
+    completeAllTask: (state) => {
+      return {
+        ...state,
+        tasks: state.tasks.map((todo) => {
+          return { ...todo, completed: true };
+        }),
+      };
+    },
   },
 });
 
@@ -110,6 +126,8 @@ export const {
   removeTask,
   filterTasks,
   updateSearch,
+  completeAllTask,
+  removeAllTask,
 } = todoSlice.actions;
 
 export default todoSlice.reducer;

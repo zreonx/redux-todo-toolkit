@@ -1,10 +1,10 @@
 import { PiCheckBold } from "react-icons/pi";
-import { BsTrashFill } from "react-icons/bs";
-import { FiEdit } from "react-icons/fi";
+import { IoIosCloseCircle } from "react-icons/io";
 import { BsFillStopCircleFill } from "react-icons/bs";
 import { HiMiniFlag } from "react-icons/hi2";
 import { convertToDate } from "../helper/todoUtils";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { TodoContext } from "../context/TodoContext";
 import { useDispatch } from "react-redux";
 import { Tooltip } from "flowbite-react";
 import {
@@ -29,8 +29,8 @@ import DeleteModal from "./DeleteModal";
 
 const TodoTaskAction = ({ tasks }) => {
   const dispatch = useDispatch();
-  const [openModal, setOpenModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
+  const { deleteModal, setDeleteModal, openModal, setOpenModal } =
+    useContext(TodoContext);
   const [editTodo, setEditTodo] = useState({
     id: "",
     task: "",
@@ -116,7 +116,7 @@ const TodoTaskAction = ({ tasks }) => {
                           <button
                             disabled={`${todo.completed ? "disabled" : ""}`}
                             onClick={(e) => handlePendingToggle(e, todo.id)} // Pass event object to the handler
-                            className={`p-2 text-lg hover:bg-lightcl disabled:cursor-not-allowed text-slate-500 dark:text-slate-200 ${
+                            className={`p-2 text-xl hover:bg-lightcl disabled:cursor-not-allowed text-slate-500 dark:text-slate-200 ${
                               todo.inProgress
                                 ? "!text-red-400 dark:!text-red-500"
                                 : ""
@@ -147,9 +147,9 @@ const TodoTaskAction = ({ tasks }) => {
                               setDeleteModal(true);
                               setRemoveTodoId(todo.id);
                             }}
-                            className='p-2 text-lg hover:bg-lightcl text-slate-500 dark:text-slate-200 dark:hover:bg-headcl rounded-lg'
+                            className='p-2 text-xl hover:bg-lightcl text-slate-500 dark:text-slate-200 dark:hover:bg-headcl rounded-lg'
                           >
-                            <BsTrashFill />
+                            <IoIosCloseCircle />
                           </button>
                         </Tooltip>
                       </div>

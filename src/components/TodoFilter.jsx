@@ -1,8 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Dropdown } from "flowbite-react";
 import { MdChecklistRtl } from "react-icons/md";
+import { BsTrashFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
-import { filterTasks, updateSearch } from "../redux/features/todos/todoSlice";
+import {
+  filterTasks,
+  updateSearch,
+  completeAllTask,
+  removeAllTask,
+} from "../redux/features/todos/todoSlice";
+import { Tooltip } from "flowbite-react";
 
 const TodoFilter = () => {
   const { search } = useSelector((state) => state.todo);
@@ -20,6 +27,14 @@ const TodoFilter = () => {
     },
     [search]
   );
+
+  const handleRemoveAllTask = useCallback(() => {
+    dispatch(removeAllTask());
+  });
+
+  const handleCompleteAllTask = useCallback(() => {
+    dispatch(completeAllTask());
+  });
 
   useEffect(() => {
     setFilterValue();
@@ -51,9 +66,22 @@ const TodoFilter = () => {
           </Dropdown>
         </div>
 
-        <button className='border rounded-md px-4 py-2.5 text-lg hover:bg-lightcl dark:hover:text-gray-700'>
-          <MdChecklistRtl />
-        </button>
+        <Tooltip style='auto' content='Complete All Task'>
+          <button
+            onClick={handleCompleteAllTask}
+            className='border rounded-md px-4 py-2.5 text-lg hover:bg-lightcl dark:hover:text-gray-700'
+          >
+            <MdChecklistRtl />
+          </button>
+        </Tooltip>
+        <Tooltip style='auto' content='Empty Task'>
+          <button
+            onClick={handleRemoveAllTask}
+            className='border rounded-md px-4 py-2.5 text-lg hover:bg-lightcl dark:hover:text-gray-700'
+          >
+            <BsTrashFill />
+          </button>
+        </Tooltip>
       </div>
       <div>
         <input

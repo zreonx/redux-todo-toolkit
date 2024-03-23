@@ -1,4 +1,5 @@
 import { Modal } from "flowbite-react";
+import { useFocus } from "../hooks/useFocus";
 
 const EditModal = ({
   setEditTodo,
@@ -7,31 +8,34 @@ const EditModal = ({
   openModal,
   setOpenModal,
 }) => {
+  const inputRef = useFocus();
+
   return (
     <Modal
-      dismissible
       show={openModal}
       position='center'
       className='text-black max-sm:pt-2'
       onClose={() => setOpenModal(false)}
+      closable={false}
+      initialFocus={inputRef}
     >
       <div className='bg-lightcl dark:bg-slate-600 rounded-md'>
         <Modal.Header className='border-none pt-4 pb-0'>Todo</Modal.Header>
         <Modal.Body className='px-6 pt-2 pb-0'>
-          <input
-            className='w-full px-1 font-medium text-lg py-1 focus:outline-none focus:border-slate-300 border-0 border-b-2 border-slate-300 border-b-slate-300 bg-transparent dark:!text-white'
-            type='text'
+          <textarea
+            className='w-full px-1 font-medium text-lg py-1 focus:outline-none focus:border-slate-300 border-none resize-none border-slate-300 border-b-slate-300 bg-transparent dark:!text-white h-[10rem]'
             value={editTodo.task}
+            ref={inputRef}
             onChange={(e) => {
               setEditTodo({ ...editTodo, task: e.target.value });
             }}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                handleSaveTodo();
-                e.target.blur();
-                setOpenModal(false);
-              }
-            }}
+            // onKeyUp={(e) => {
+            //   if (e.key === "Enter") {
+            //     handleSaveTodo();
+            //     e.target.blur();
+            //     setOpenModal(false);
+            //   }
+            // }}
           />
           <div className='pt-2 italic font-extralight text-xs dark:text-gray-50/50'>
             <span>{editTodo.isEdited ? "Edited: " : ""}</span>

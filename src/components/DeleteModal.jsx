@@ -11,7 +11,7 @@ const DeleteModal = ({ setDeleteModal, deleteModal, handleDeleteTodo, id }) => {
       <div className='bg-lightcl dark:bg-slate-600 rounded-md'>
         <Modal.Header className='border-none pt-4 pb-0'>Delete</Modal.Header>
         <Modal.Body className='px-6 pt-2 pb-0'>
-          <h3 className='dark:text-white mb-7 text-center'>
+          <h3 className='dark:text-white mb-6'>
             Are you sure you want to remove this task?
           </h3>
         </Modal.Body>

@@ -3,17 +3,16 @@ import TodoTasks from "./TodoTasks";
 import { ToggleSwitch } from "flowbite-react";
 import { useDispatch } from "react-redux";
 import { addTask } from "../redux/features/todos/todoSlice";
-import { useCallback, useEffect, useRef, useState } from "react";
-const Todo = ({ theme, setTheme }) => {
+import { useCallback, useContext, useEffect, useRef, useState } from "react";
+import { TodoContext } from "../context/TodoContext";
+import { useFocus } from "../hooks/useFocus";
+
+const Todo = () => {
+  const { theme, setTheme } = useContext(TodoContext);
   const dispatch = useDispatch();
   const [todo, setTodo] = useState("");
-  const inputRef = useRef(null);
 
-  useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.focus();
-    }
-  }, []);
+  const inputRef = useFocus();
 
   const handleAddTask = useCallback(() => {
     if (todo) {

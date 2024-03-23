@@ -1,12 +1,19 @@
-import { createContext, useContext, useTransition } from "react";
+import { createContext, useState } from "react";
 
 export const TodoContext = createContext(null);
 
 export const TodoContextProvider = ({ children }) => {
-  const [isPending, startTransition] = useTransition();
-  return (
-    <TodoContext.Provider value={{ isPending, startTransition }}>
-      {children}
-    </TodoContext.Provider>
-  );
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [theme, setTheme] = useState(false);
+
+  const data = {
+    openModal,
+    setOpenModal,
+    deleteModal,
+    setDeleteModal,
+    theme,
+    setTheme,
+  };
+  return <TodoContext.Provider value={data}>{children}</TodoContext.Provider>;
 };

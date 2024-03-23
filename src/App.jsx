@@ -1,7 +1,8 @@
 import Todo from "./components/Todo";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { TodoContext } from "./context/TodoContext";
 const App = () => {
-  const [theme, setTheme] = useState(false);
+  const { theme, setTheme } = useContext(TodoContext);
 
   useEffect(() => {
     if (theme) {
@@ -18,7 +19,7 @@ const App = () => {
           color: black;
         }
       `}</style>
-      <Todo theme={theme} setTheme={setTheme} />
+      <Todo />
     </div>
   );
 };

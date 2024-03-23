@@ -1,28 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { generateId, generateDate } from "../../../helper/todoUtils";
 
-const initialState = {
-  tasks: [
-    // {
-    //   id: generateId(),
-    //   task: "Some task",
-    //   dateCreated: generateDate(),
-    //   completed: false,
-    //   inProgress: false,
-    //   isEdited: false,
-    // },
-    // {
-    //   id: generateId(),
-    //   task: "Another task",
-    //   dateCreated: generateDate(),
-    //   completed: true,
-    //   inProgress: false,
-    //   isEdited: false,
-    // },
-  ],
+const todos = JSON.parse(localStorage.getItem("todos")) || {};
 
-  filter: "ALL",
-  search: "",
+const initialState = {
+  ...todos,
 };
 
 const todoSlice = createSlice({
@@ -30,7 +12,7 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action) => {
-      return {
+      const data = {
         ...state,
         tasks: [
           ...state.tasks,
@@ -44,10 +26,14 @@ const todoSlice = createSlice({
           },
         ],
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
     markAsCompleteToggle: (state, action) => {
       const id = action.payload.id;
-      return {
+      const data = {
         ...state,
         tasks: state.tasks.map((todo) => {
           return todo.id === id
@@ -55,10 +41,14 @@ const todoSlice = createSlice({
             : todo;
         }),
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
     markPendingToggle: (state, action) => {
       const id = action.payload.id;
-      return {
+      const data = {
         ...state,
         tasks: state.tasks.map((todo) => {
           return todo.id === id
@@ -66,11 +56,15 @@ const todoSlice = createSlice({
             : todo;
         }),
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
     editSaveTask: (state, action) => {
       const { id, task } = action.payload;
 
-      return {
+      const data = {
         ...state,
         tasks: state.tasks.map((todo) => {
           return todo.id === id
@@ -78,42 +72,66 @@ const todoSlice = createSlice({
             : todo;
         }),
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
     removeTask: (state, { payload }) => {
       const { id } = payload;
-      return {
+      const data = {
         ...state,
         tasks: state.tasks.filter((todo) => todo.id !== id),
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
     filterTasks: (state, { payload }) => {
-      return {
+      const data = {
         ...state,
         filter: payload.filter,
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
 
     updateSearch: (state, { payload: { search } }) => {
-      return {
+      const data = {
         ...state,
         search,
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
 
     removeAllTask: (state) => {
-      return {
+      const data = {
         ...state,
         tasks: [],
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
 
     completeAllTask: (state) => {
-      return {
+      const data = {
         ...state,
         tasks: state.tasks.map((todo) => {
           return { ...todo, completed: true };
         }),
       };
+
+      localStorage.setItem("todos", JSON.stringify({ ...data }));
+
+      return data;
     },
   },
 });

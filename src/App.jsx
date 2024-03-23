@@ -1,10 +1,13 @@
 import Todo from "./components/Todo";
-import { useState, useEffect, useContext } from "react";
-import { TodoContext } from "./context/TodoContext";
+import { useState, useEffect } from "react";
+import { useTodoContext } from "./context/TodoContext";
+import { useSelector } from "react-redux";
 const App = () => {
-  const { theme, setTheme } = useContext(TodoContext);
+  const { theme, setTheme } = useTodoContext();
 
   useEffect(() => {
+    const { themeStatus } = JSON.parse(localStorage.getItem("theme")) || false;
+    setTheme(themeStatus);
     if (theme) {
       document.documentElement.setAttribute("class", "dark");
     } else {

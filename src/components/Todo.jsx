@@ -1,7 +1,7 @@
 import TodoFilter from "./TodoFilter";
 import TodoTasks from "./TodoTasks";
 import { ToggleSwitch } from "flowbite-react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addTask } from "../redux/features/todos/todoSlice";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTodoContext } from "../context/TodoContext";
@@ -21,7 +21,10 @@ const Todo = () => {
     }
   }, [todo]);
 
-  const handleToggleTheme = useCallback(() => setTheme(!theme), [theme]);
+  const handleToggleTheme = useCallback(() => {
+    localStorage.setItem("theme", JSON.stringify({ themeStatus: !theme }));
+    setTheme(!theme);
+  }, [theme]);
 
   return (
     <div className='w-[55rem] max-lg:w-full py-4 px-5 max-sm:p-5 transition-colors'>

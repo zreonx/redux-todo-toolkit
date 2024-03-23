@@ -75,7 +75,6 @@ const TodoTaskAction = memo(({ tasks }) => {
             <Fade>
               {tasks
                 .map((todo) => {
-                  console.log(todo);
                   return (
                     <div
                       onClick={() =>

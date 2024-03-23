@@ -6,6 +6,9 @@ export const TodoContextProvider = ({ children }) => {
   const [deleteModal, setDeleteModal] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [theme, setTheme] = useState(false);
+  const [oldTasks, setOldTasks] = useState(
+    JSON.parse(localStorage.getItem("theme")) || null
+  );
 
   const data = {
     openModal,
@@ -14,6 +17,8 @@ export const TodoContextProvider = ({ children }) => {
     setDeleteModal,
     theme,
     setTheme,
+    oldTasks,
+    setOldTasks,
   };
   return <TodoContext.Provider value={data}>{children}</TodoContext.Provider>;
 };

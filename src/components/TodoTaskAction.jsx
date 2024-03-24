@@ -89,7 +89,7 @@ const TodoTaskAction = memo(({ tasks }) => {
                         )
                       }
                       key={todo.id}
-                      className={`p-4 rounded-md shadow-sm animate__animated  animate__slideInDown flex gap-5 items-center border justify-between cursor-pointer ${
+                      className={`p-4 rounded-md shadow-sm animate__animate hover:shadow-md dark:hover:bg-slate-600 animate__slideInDown flex gap-5 items-center border justify-between cursor-pointer ${
                         todo.completed &&
                         "opacity-50 bg-slate-100 dark:bg-slate-700"
                       }`}

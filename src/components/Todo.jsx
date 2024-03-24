@@ -7,6 +7,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTodoContext } from "../context/TodoContext";
 import { useFocus } from "../hooks/useFocus";
 
+import { GoSun } from "react-icons/go";
+import { BsFillMoonStarsFill } from "react-icons/bs";
+
 const Todo = () => {
   const { theme, setTheme } = useTodoContext();
   const dispatch = useDispatch();
@@ -34,7 +37,13 @@ const Todo = () => {
           <p className='px-1'>don't do what you want to do</p>
         </div>
 
-        <ToggleSwitch checked={theme} label='' onChange={handleToggleTheme} />
+        {/* <ToggleSwitch checked={theme} label='' onChange={handleToggleTheme} /> */}
+        <button
+          className='text-xl hover:shadow-md p-3 rounded-md border'
+          onClick={() => handleToggleTheme()}
+        >
+          {theme ? <BsFillMoonStarsFill /> : <GoSun />}
+        </button>
       </div>
 
       <div className='py-3 flex gap-2 flex-col sm:flex-row'>

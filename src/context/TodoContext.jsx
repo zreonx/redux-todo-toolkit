@@ -4,6 +4,8 @@ export const TodoContext = createContext(null);
 
 export const TodoContextProvider = ({ children }) => {
   const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteAllModal, setDeleteAllModal] = useState(false);
+  const [completeTasks, setCompleteTasks] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [theme, setTheme] = useState(false);
   const [statusLabel, setStatusLabel] = useState("All");
@@ -23,6 +25,10 @@ export const TodoContextProvider = ({ children }) => {
   );
 
   const data = {
+    completeTasks,
+    setCompleteTasks,
+    deleteAllModal,
+    setDeleteAllModal,
     showToast,
     setShowToast,
     removeTodoId,

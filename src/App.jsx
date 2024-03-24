@@ -1,21 +1,31 @@
 import Todo from "./components/Todo";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useTodoContext } from "./context/TodoContext";
-import { Toast } from "flowbite-react";
-import { HiX } from "react-icons/hi";
+import { Tooltip, Toast } from "flowbite-react";
+import { HiCheck, HiExclamation, HiX } from "react-icons/hi";
 
 const App = () => {
-  const { showToast, setShowToast, toastMessages } = useTodoContext();
+  const { theme, setTheme, showToast, setShowToast } = useTodoContext();
+
+  useEffect(() => {
+    const { themeStatus } = JSON.parse(localStorage.getItem("theme")) || false;
+    setTheme(themeStatus);
+    if (theme) {
+      document.documentElement.setAttribute("class", "dark");
+    } else {
+      document.documentElement.setAttribute("class", "light");
+    }
+  }, [theme]);
 
   useEffect(() => {
     let timeout;
-    if (toastMessages.length > 0) {
+    if (showToast) {
       timeout = setTimeout(() => {
         setShowToast(false);
       }, 3000);
     }
     return () => clearTimeout(timeout);
-  }, [toastMessages, setShowToast]);
+  }, [showToast]);
 
   return (
     <div className='flex justify-center flex-1 overflow-x-hidden'>
@@ -25,24 +35,19 @@ const App = () => {
         }
       `}</style>
       <Todo />
-      <div className='toast-container'>
-        {toastMessages.map((message, index) => (
-          <Toast
-            key={index}
-            className={`absolute left-1/2 -translate-x-1/2 top-${
-              4 + index * 12
-            } animate__animated ${
-              showToast ? "animate__fadeIn" : "animate__fadeOut"
-            }`}
-          >
-            <div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
-              <HiX className='h-5 w-5' />
-            </div>
-            <div className='ml-3 text-sm font-normal'>{message}</div>
-            <Toast.Toggle />
-          </Toast>
-        ))}
-      </div>
+      {showToast && (
+        <Toast
+          className={`absolute left-1/2 -translate-x-1/2 top-4 animate__animated ${
+            showToast ? "animate__fadeIn" : "animate__fadeOut"
+          }`}
+        >
+          <div className='inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-red-100 text-red-500 dark:bg-red-800 dark:text-red-200'>
+            <HiX className='h-5 w-5' />
+          </div>
+          <div className='ml-3 text-sm font-normal'>Item has been deleted.</div>
+          <Toast.Toggle />
+        </Toast>
+      )}
     </div>
   );
 };
